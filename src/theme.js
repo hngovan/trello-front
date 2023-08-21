@@ -3,6 +3,10 @@ import { teal, deepOrange, cyan, orange } from '@mui/material/colors'
 
 // Create a theme instance.
 const theme = extendTheme({
+  layoutCustom: {
+    appBoard: 64,
+    boardBarHeight: 56
+  },
   colorSchemes: {
     light: {
       palette: {
