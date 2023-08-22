@@ -1,23 +1,27 @@
-import { useState } from 'react'
 import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import InputBase from '@mui/material/InputBase'
 import Badge from '@mui/material/Badge'
-import MenuItem from '@mui/material/MenuItem'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import InputBase from '@mui/material/InputBase'
 import Menu from '@mui/material/Menu'
-import ModeToggle from '../ModeToggle'
+import MenuItem from '@mui/material/MenuItem'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import { useState } from 'react'
 
-import MenuIcon from '@mui/icons-material/Menu'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import AppsIcon from '@mui/icons-material/Apps'
 import MailIcon from '@mui/icons-material/Mail'
 import MoreIcon from '@mui/icons-material/MoreVert'
-import SearchIcon from '@mui/icons-material/Search'
-import AccountCircle from '@mui/icons-material/AccountCircle'
 import NotificationsIcon from '@mui/icons-material/Notifications'
+import SearchIcon from '@mui/icons-material/Search'
+import { alpha, styled } from '@mui/material/styles'
 
-import { styled, alpha } from '@mui/material/styles'
+import SvgIcon from '@mui/material/SvgIcon'
+import { ReactComponent as TrelloIcon } from '~/assets/trello.svg'
+
+import ModeToggle from '../ModeToggle'
+import Workspaces from './Menu/Workspaces'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -59,7 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   }
 }))
 
-function AppBarHeader({ children }) {
+function AppBarHeader() {
   const [anchorEl, setAnchorEl] = useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null)
 
@@ -160,25 +164,43 @@ function AppBarHeader({ children }) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="primary">
+      <AppBar position="static" color="default">
         <Toolbar>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ borderRadius: 1, color: 'primary.main' }}
           >
-            <MenuIcon />
+            <AppsIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            MUI
-          </Typography>
+          <IconButton sx={{ borderRadius: 1 }}>
+            <SvgIcon
+              component={TrelloIcon}
+              inheritViewBox
+              sx={{
+                color: 'primary.main',
+                fontSize: 22,
+                mr: 1
+              }}
+            />
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                color: 'primary.main'
+              }}
+            >
+              MUI
+            </Typography>
+          </IconButton>
           <Box sx={{ flexGrow: 1 }} />
+          <Box>
+            <Workspaces />
+          </Box>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -224,7 +246,6 @@ function AppBarHeader({ children }) {
               <AccountCircle />
             </IconButton>
             <ModeToggle />
-            {children}
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
