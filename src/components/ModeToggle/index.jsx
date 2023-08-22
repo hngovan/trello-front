@@ -1,71 +1,93 @@
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
-import LightModeIcon from '@mui/icons-material/LightMode'
-import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
-import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
+import Brightness6Icon from '@mui/icons-material/Brightness6'
+import Badge from '@mui/material/Badge'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import IconButton from '@mui/material/IconButton'
+import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import Tooltip from '@mui/material/Tooltip'
 import { useColorScheme } from '@mui/material/styles'
+import { useState } from 'react'
 
 function ModeToggle() {
   const { mode, setMode } = useColorScheme()
 
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
+  const [selectedMode, setSelectedMode] = useState(mode)
+
   const handleChange = (event) => {
-    setMode(event.target.value)
+    const newMode = event.target.value
+    setSelectedMode(newMode)
+    setMode(newMode)
+    setAnchorEl(null)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
   }
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 140 }} size="small">
-      <InputLabel id="label-select-dark-light-mode">Mode</InputLabel>
-      <Select
-        labelId="label-select-dark-light-mode"
-        id="label-select-dark-light-mode"
-        value={mode}
-        label="Mode"
-        onChange={handleChange}
+    <>
+      <Tooltip title="Theme">
+        <IconButton
+          size="large"
+          id="basic-button-mode"
+          aria-label="change mode"
+          aria-controls={open ? 'basic-mode' : undefined}
+          aria-haspopup="true"
+          onClick={handleClick}
+          color="inherit"
+        >
+          <Badge>
+            <Brightness6Icon />
+          </Badge>
+        </IconButton>
+      </Tooltip>
+      <Menu
+        id="basic-mode"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button-mode'
+        }}
+        sx={{ mt: 2 }}
       >
-        <MenuItem value={'light'}>
-          <Box
-            component="div"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2
-            }}
-          >
-            <LightModeIcon fontSize="small" />
-            Light
-          </Box>
-        </MenuItem>
-        <MenuItem value={'dark'}>
-          <Box
-            component="div"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2
-            }}
-          >
-            <DarkModeOutlinedIcon fontSize="small" />
-            Dark
-          </Box>
-        </MenuItem>
-        <MenuItem value={'system'}>
-          <Box
-            component="div"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2
-            }}
-          >
-            <SettingsBrightnessIcon fontSize="small" />
-            System
-          </Box>
-        </MenuItem>
-      </Select>
-    </FormControl>
+        <RadioGroup
+          aria-label="mode"
+          name="mode"
+          value={selectedMode}
+          onChange={handleChange}
+        >
+          <MenuItem value="light">
+            <FormControlLabel value="light" control={<Radio />} label="Light">
+            </FormControlLabel>
+          </MenuItem>
+          <MenuItem value="dark">
+            <FormControlLabel value="dark" control={<Radio />} label="Dark">
+            </FormControlLabel>
+          </MenuItem>
+          <MenuItem value="system">
+            <FormControlLabel value="system" control={<Radio />} label="System">
+            </FormControlLabel>
+          </MenuItem>
+        </RadioGroup>
+      </Menu>
+    </>
   )
 }
 

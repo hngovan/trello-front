@@ -9,7 +9,6 @@ function Board() {
       disableGutters
       maxWidth={false}
       component="main"
-      elevation={0}
       sx={{ height: '100vh' }}
     >
       <AppBar />

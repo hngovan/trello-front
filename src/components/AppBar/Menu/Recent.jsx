@@ -5,7 +5,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { useState } from 'react'
 
-function Workspaces() {
+function Recent() {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -18,22 +18,22 @@ function Workspaces() {
   return (
     <>
       <Button
-        id="basic-button-workspaces"
-        aria-controls={open ? 'basic-menu-workspaces' : undefined}
+        id="basic-button-recent"
+        aria-controls={open ? 'basic-menu-recent' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         endIcon={open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       >
-        Workspaces
+        Recent
       </Button>
       <Menu
-        id="basic-menu-workspaces"
+        id="basic-menu-recent"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'basic-button-workspaces'
+          'aria-labelledby': 'basic-button-recent'
         }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
@@ -44,4 +44,4 @@ function Workspaces() {
   )
 }
 
-export default Workspaces
+export default Recent
